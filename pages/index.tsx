@@ -1,6 +1,6 @@
-import type {NextPage} from 'next'
+import type {NextPage, NextPageContext} from 'next'
 import {apiCall} from "../services/api-call";
-import {signIn, signOut, useSession} from "next-auth/react";
+import {getSession, signIn, signOut, useSession} from "next-auth/react";
 import {useRouter} from "next/router";
 import dynamic from "next/dynamic";
 import {GoogleLoginButton} from "react-social-login-buttons";
@@ -50,6 +50,13 @@ const Home: NextPage = () => {
             </button>
         </div>
     </>);
+}
+export async function getServerSideProps(context: NextPageContext) {
+    return {
+        props: {
+            session: await getSession(context),
+        },
+    }
 }
 
 export default Home
